@@ -2,7 +2,7 @@
   <el-container class="home-page">
     <!-- 侧边栏 -->
     <el-aside :width="sideWidth">
-      <side-bar></side-bar>
+      <router-view name="sidebar"></router-view>
     </el-aside>
     <el-container>
       <!-- 顶栏 -->
@@ -18,13 +18,11 @@
 </template>
 
 <script>
-import SideBar from '@/components/SideBar';
 import TopBar from '@/components/TopBar';
 
 export default {
   name: 'Home',
   components: {
-    SideBar,
     TopBar
   },
   data() {

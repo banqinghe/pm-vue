@@ -3,7 +3,7 @@
     <div class="logo-box">
       <i class="el-icon-user"></i>
     </div>
-    <el-menu default-active="team" :collapse="isFolded">
+    <el-menu default-active="team" :collapse="isFolded" router>
       <el-menu-item index="team">
         <i class="el-icon-ship"></i>
         <span slot="title">我的团队</span>
@@ -12,7 +12,7 @@
         <i class="el-icon-document-add"></i>
         <span slot="title">我的项目</span>
       </el-menu-item>
-      <el-menu-item index="info">
+      <el-menu-item index="stu-info">
         <i class="el-icon-postcard"></i>
         <span slot="title">我的信息</span>
       </el-menu-item>
