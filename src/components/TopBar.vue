@@ -4,8 +4,8 @@
       <i class="el-icon-s-unfold fold-icon" @click="toggleFold" :style="foldIconStyle"></i>
     </div>
     <div class="top-bar-right">
-      <span class="current-user">当前用户：{{ currentUser }}</span>
-      <i class="el-icon-switch-button fold-icon" title="退出登录"></i>
+      <span class="current-user">当前用户：{{ this.$store.state.userData.username }}</span>
+      <i class="el-icon-switch-button fold-icon" title="退出登录" @click="logout"></i>
     </div>
   </div>
 </template>
@@ -14,7 +14,7 @@
 export default {
   data() {
     return {
-      currentUser: "班庆贺",
+      // currentUser: "班庆贺",
     }
   },
   computed: {
@@ -30,7 +30,17 @@ export default {
   methods: {
     toggleFold() {
       this.$store.commit("toggleFold");
-    }
+    },
+    logout() {
+      this.$confirm("你确定要退出吗？", "退出确认", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        this.$store.commit("logout");
+        this.$router.push("/login-page/login");
+      });
+    },
   }
 };
 </script>

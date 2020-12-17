@@ -38,13 +38,18 @@ export default {
         username: "",
         password: "",
       },
+      routerMap: {
+        'ROLE_USER': 'stu',
+        'ROLE_TEACHER': 'inst',
+        'ROLE_ADMIN': 'admin'
+      },
       rules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
         ],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
       },
-      checked: false,
+      checked: true,
     };
   },
   methods: {
@@ -52,27 +57,36 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.axios
-            .post("/login", JSON.stringify(this.loginForm))
+            .post("/auth/login", this.loginForm)
             .then((response) => {
               if (response.status === 200) {
                 console.log(response.data);
-                let userData = {
+                const userData = {
                   username: "",
-                  password: "",
+                  role: "",
+                  token: ""
                 };
-                userData.username = response.data.username;
-                userData.password = response.data.password;
+                userData.username = this.loginForm.username;
+                userData.role = response.headers["role"];
+                userData.token = response.headers["token"];
+
+                console.log(userData);
                 this.$store.commit("login", userData);
+
+                // 记住密码
                 if (this.checked) {
-                  let userInfo = {
+                  const userInfo = {
                     username: this.loginForm.username,
                     password: this.loginForm.password,
                   };
                   localStorage.setItem("userinfo", JSON.stringify(userInfo));
                 }
-                this.$route.push("/home");
+
+                // 根据角色进行导航
+                this.$router.push(`/home/${this.routerMap[userData.role]}`);
+                
                 this.$message({
-                  message: "登陆成功",
+                  message: "登录成功",
                   type: "success",
                 });
               } else {
@@ -92,9 +106,10 @@ export default {
     },
   },
   created() {
-    if (this.$store.status.userData !== null) {
-      this.$route.push("/home");
-    }
+  //   if (this.$store.status.userData !== null) {
+  //     this.$route.push("/home");
+  //   }
+  // 如果本地已经保存了密码，则使用本地密码
     if (localStorage.getItem("userinfo")) {
       const userinfo = JSON.parse(localStorage.getItem("userinfo"));
       this.loginForm.username = userinfo.username;

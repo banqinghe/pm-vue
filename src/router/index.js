@@ -1,5 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
+// 登录页
+import LoginPage from '@/views/LoginPage'
+import Login from '@/views/Login'
+import Register from '@/views/Register'
+
 import Home from '../views/Home.vue'
 
 import StuHome from '@/views/student/StuHome'
@@ -17,13 +23,30 @@ Vue.use(VueRouter)
 const routes =[
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/login-page'
+  },
+  {
+    path: '/login-page',
+    name: 'LoginPage',
+    component: LoginPage,
+    redirect: '/login-page/login',
+    children: [
+      {
+        path: 'login',
+        name: 'Login',
+        component: Login
+      },
+      {
+        path: 'register',
+        name: 'Register',
+        component: Register
+      }
+    ]
   },
   {
     path: '/home',
     name: 'Home',
     component: Home,
-    redirect: '/home/stu',
     children: [
       {
         path: 'stu',
