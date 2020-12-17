@@ -46,52 +46,11 @@ export default {
         newName: "",
       },
       teams: [
-        // {
-        //   name: "",
-        //   members: [],
-        //   projects: [],
-        // },
-
-        // 测试数据
         {
-          name: "小队1",
-          members: ["李振康", "张昊宇", "徐天舒"],
-          projects: ["卖车", "卖拐"],
-        },
-        {
-          name: "小队2",
-          members: ["班庆贺", "冷淠"],
-          projects: ["防不胜防"],
-        },
-        {
-          name: "小队3",
-          members: ["班庆贺", "冷淠"],
-          projects: ["防不胜防"],
-        },
-        {
-          name: "小队4",
-          members: ["班庆贺", "冷淠"],
-          projects: ["防不胜防"],
-        },
-        {
-          name: "小队5",
-          members: ["班庆贺", "冷淠"],
-          projects: ["防不胜防"],
-        },
-        {
-          name: "小队6",
-          members: ["班庆贺", "冷淠"],
-          projects: ["防不胜防"],
-        },
-        {
-          name: "小队7",
-          members: ["班庆贺", "冷淠"],
-          projects: ["防不胜防"],
-        },
-        {
-          name: "小队8",
-          members: ["班庆贺", "冷淠"],
-          projects: ["防不胜防"],
+          teamid: "",
+          teamname: "",
+          students: [],
+          projects: [],
         },
       ],
     };
