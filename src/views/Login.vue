@@ -62,6 +62,7 @@ export default {
               if (response.status === 200) {
                 console.log(response.data);
                 const userData = {
+                  uid: "",
                   username: "",
                   role: "",
                   token: ""
@@ -69,6 +70,7 @@ export default {
                 userData.username = this.loginForm.username;
                 userData.role = response.headers["role"];
                 userData.token = response.headers["token"];
+                userData.uid = response.headers["uid"];
 
                 console.log(userData);
                 this.$store.commit("login", userData);

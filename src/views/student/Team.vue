@@ -1,8 +1,8 @@
 <template>
   <div class="team-page">
-    <el-card class="team-card" v-for="team in teams" :key="team.name">
+    <el-card class="team-card" v-for="team in teams" :key="team.teamname">
       <div slot="header" class="clearfix">
-        <span>{{ team.name }}</span>
+        <span>{{ team.teamname }}</span>
         <el-dropdown class="team-menu">
           <el-button class="setting-button" type="text">
             <i class="el-icon-setting"></i>
@@ -15,7 +15,9 @@
       </div>
       <p>
         <span class="info-title">小队成员：</span>
-        {{ team.members }}
+        <span  v-for="student in team.students" :key="student.username">
+          {{ student.username }}
+        </span>
       </p>
       <p>
         <span class="info-title">项目列表：</span>
@@ -63,18 +65,38 @@ export default {
     },
   },
 
-  // created: function () {
-  //   this.axios
-  //     .get("/stu/team")
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         this.teams = res.data;
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // },
+  created: function () {
+    const uid = this.$store.state.userData.uid;
+    this.axios
+            .get("/student/" + uid)
+            .then(res => {
+              if (res.status === 200) {
+                const student = res.data.stu;
+                this.teams = student.teams;
+                console.log(student);
+                this.teams.forEach((team) => {
+                  this.axios
+                          .get("/team/" + team.teamid)
+                          .then((res) => {
+                            console.log(res);
+                            if (res.status === 200) {
+                              console.log(team);
+                              team.students = res.data.team.students;
+                              team.projects = res.data.team.projects;
+                            }
+                          })
+                          .catch((err) => {
+                            console.error(err);
+                          });
+                });
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+
+
+  },
 };
 </script>
 
