@@ -1,6 +1,6 @@
 <template>
   <div class="team-page">
-    <el-card class="team-card" v-for="team in teams" :key="team.teamname">
+    <el-card class="team-card" v-for="team in teams" :key="team.teamid">
       <div slot="header" class="clearfix">
         <span>{{ team.teamname }}</span>
         <el-dropdown class="team-menu">
@@ -14,14 +14,16 @@
         </el-dropdown>
       </div>
       <p>
-        <span class="info-title">小队成员：</span>m
-        <span  v-for="student in team.students" :key="student.usernae">
-          {{ student.username }}
+        <span class="info-title">小队成员：</span>
+        <span  v-for="student in team.students" :key="student.sid">
+          <el-button type="text" @click="getStudentInfo(student)">{{ student.username }}</el-button>
         </span>
       </p>
       <p>
         <span class="info-title">项目列表：</span>
-        {{ team.projects }}
+        <span  v-for="project in team.projects" :key="project.pid">
+          <el-button type="text" @click="getProjectInfo(project)">{{ project.projectname }}</el-button>
+        </span>
       </p>
     </el-card>
 
@@ -36,6 +38,22 @@
         <el-button type="primary" @click="renameVisible = false">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="学生信息" :visible.sync="stuInfoVisible">
+      <p><span class="info-title">ID：</span>{{stuInfo.sid}}</p>
+      <p><span class="info-title">用户名：</span>{{stuInfo.username}}</p>
+      <p><span class="info-title">性别：</span>{{stuInfo.sex ? "女" : "男"}}</p>
+      <p><span class="info-title">院系：</span>{{stuInfo.department}}</p>
+      <p><span class="info-title">邮箱：</span>{{stuInfo.email}}</p>
+    </el-dialog>
+
+    <el-dialog title="项目信息" :visible.sync="projectInfoVisible">
+      <p><span class="info-title">ID：</span>{{proInfo.pid}}</p>
+      <p><span class="info-title">名称：</span>{{proInfo.projectname}}</p>
+      <p><span class="info-title">类型：</span>{{proInfo.type}}</p>
+      <p><span class="info-title">项目进度：</span>{{proInfo.stage}}</p>
+      <p><span class="info-title">项目描述：</span>{{proInfo.description}}</p>
+    </el-dialog>
   </div>
 </template>
 
@@ -44,6 +62,8 @@ export default {
   data() {
     return {
       renameVisible: false,
+      stuInfoVisible: false,
+      projectInfoVisible: false,
       renameForm: {
         newName: "",
       },
@@ -55,9 +75,35 @@ export default {
           projects: [],
         },
       ],
+      stuInfo: {
+        username: "",
+        sid: "",
+        sex: "",
+        department: "",
+        email: ""
+      },
+      proInfo: {
+        projectname: "",
+        pid: "",
+        description: "",
+        type: "",
+        stage: ""
+      }
     };
   },
   methods: {
+
+    getStudentInfo: function (student) {
+      this.stuInfoVisible = true;
+      this.stuInfo = student;
+    },
+
+    getProjectInfo: function (project) {
+      console.log(project);
+      this.projectInfoVisible = true;
+      this.proInfo = project;
+    },
+
     showTeamMenu: function (e) {
       console.log(e.target.parent);
       // document.querySelectorAll(".team-menu")
@@ -137,6 +183,9 @@ export default {
   cursor: pointer;
 }
 
+.el-button {
+  padding: 0;
+}
 /* .team-menu-item {
 
 } */
