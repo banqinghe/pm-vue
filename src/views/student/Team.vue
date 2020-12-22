@@ -14,8 +14,8 @@
         </el-dropdown>
       </div>
       <p>
-        <span class="info-title">小队成员：</span>
-        <span  v-for="student in team.students" :key="student.username">
+        <span class="info-title">小队成员：</span>m
+        <span  v-for="student in team.students" :key="student.usernae">
           {{ student.username }}
         </span>
       </p>
